@@ -1,0 +1,352 @@
+/**
+ * WooCommerce Watermark Remover — Admin Styles
+ *
+ * Styles for the image selection grid (Products → Remove Watermarks).
+ * Supports multi-select checkboxes, sequential queue processing,
+ * and parallel worker-pool processing with configurable concurrency.
+ *
+ * @since 1.2.0
+ */
+
+/* ── Toolbar ─────────────────────────────────────────────────────── */
+.wwr-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 15px 0 10px;
+    flex-wrap: wrap;
+}
+
+.wwr-status {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2271b1;
+}
+
+.wwr-status.wwr-status-error {
+    color: #d63638;
+}
+
+.wwr-status.wwr-status-success {
+    color: #008a20;
+}
+
+.wwr-queue-counter {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2271b1;
+    background: #e7f1fa;
+    padding: 4px 12px;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+/* ── Progress bar ────────────────────────────────────────────────── */
+.wwr-progress-bar {
+    width: 100%;
+    max-width: 600px;
+    height: 24px;
+    background: #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.wwr-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #2271b1, #72aee6);
+    border-radius: 12px;
+    transition: width 0.3s ease;
+}
+
+.wwr-progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+/* ── Image grid ──────────────────────────────────────────────────── */
+.wwr-image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 15px;
+}
+
+/* ── Image card ──────────────────────────────────────────────────── */
+.wwr-image-card {
+    position: relative;
+    background: #fff;
+    border: 2px solid #dcdcde;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wwr-image-card:hover {
+    border-color: #2271b1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+}
+
+/* Selected state */
+.wwr-image-card.wwr-selected {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 2px rgba(34, 113, 177, 0.35);
+}
+
+/* Queued state (waiting in queue) */
+.wwr-image-card.wwr-queued {
+    border-color: #72aee6;
+    box-shadow: 0 0 0 1px rgba(114, 174, 230, 0.3);
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+/* Processing state */
+.wwr-image-card.wwr-processing {
+    border-color: #f0c33c;
+    box-shadow: 0 0 0 2px rgba(240, 195, 60, 0.4);
+    pointer-events: none;
+    animation: wwr-pulse-border 1.5s ease-in-out infinite;
+}
+
+@keyframes wwr-pulse-border {
+    0%, 100% { box-shadow: 0 0 0 2px rgba(240, 195, 60, 0.4); }
+    50%      { box-shadow: 0 0 0 4px rgba(240, 195, 60, 0.7); }
+}
+
+/* Done state */
+.wwr-image-card.wwr-done {
+    border-color: #008a20;
+    box-shadow: 0 0 0 1px rgba(0, 138, 32, 0.25);
+    pointer-events: none;
+}
+
+/* Error state */
+.wwr-image-card.wwr-error-card {
+    border-color: #d63638;
+    box-shadow: 0 0 0 1px rgba(214, 54, 56, 0.25);
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* ── Checkbox overlay (top-right) ────────────────────────────────── */
+.wwr-checkbox-overlay {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+}
+
+.wwr-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.wwr-checkbox-label {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 2px solid #8c8f94;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+.wwr-checkbox:checked + .wwr-checkbox-label {
+    background: #2271b1;
+    border-color: #2271b1;
+}
+
+.wwr-checkbox:checked + .wwr-checkbox-label::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 5px;
+    height: 9px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.wwr-checkbox:hover + .wwr-checkbox-label {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 2px rgba(34, 113, 177, 0.2);
+}
+
+/* ── Image thumbnail ─────────────────────────────────────────────── */
+.wwr-image-wrap {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #f6f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wwr-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ── Info bar ────────────────────────────────────────────────────── */
+.wwr-image-info {
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.wwr-product-name {
+    font-size: 12px;
+    color: #3c434a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.wwr-image-badge {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+.wwr-badge-featured {
+    background: #e7f1fa;
+    color: #2271b1;
+}
+
+.wwr-badge-gallery {
+    background: #fcf0e4;
+    color: #b2620a;
+}
+
+.wwr-badge-content {
+    background: #ecf4e9;
+    color: #3c722e;
+}
+
+.wwr-badge-unknown {
+    background: #f0f0f1;
+    color: #646970;
+}
+
+/* ── Per-card status label (during queue processing) ─────────────── */
+.wwr-card-status {
+    padding: 4px 10px 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+.wwr-card-status-queued {
+    background: #e7f1fa;
+    color: #2271b1;
+}
+
+.wwr-card-status-processing {
+    background: #fcf9e8;
+    color: #b2620a;
+}
+
+.wwr-card-status-done {
+    background: #ecf4e9;
+    color: #008a20;
+}
+
+.wwr-card-status-error {
+    background: #fcf0f1;
+    color: #d63638;
+}
+
+/* ── Tooltip on completed image ──────────────────────────────────── */
+.wwr-done-checkmark {
+    position: absolute;
+    bottom: 72px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background: #008a20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.wwr-done-checkmark::after {
+    content: '✓';
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* ── Error indicator on card ─────────────────────────────────────── */
+.wwr-error-indicator {
+    position: absolute;
+    bottom: 72px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background: #d63638;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.wwr-error-indicator::after {
+    content: '✕';
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ── Loading spinner (inside card) ───────────────────────────────── */
+.wwr-spinner-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+.wwr-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #dcdcde;
+    border-top-color: #2271b1;
+    border-radius: 50%;
+    animation: wwr-spin 0.7s linear infinite;
+}
+
+@keyframes wwr-spin {
+    to { transform: rotate(360deg); }
+}
