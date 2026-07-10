@@ -47,6 +47,9 @@ AI-powered watermark removal for WooCommerce product images. Uses GPT-Image-2 vi
 - Pixertor-ToAPIs 支持的其他模型
 ## 面板截图
 <img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/26786dbd-e2b4-4c7a-a6b6-dc05048982a9" />
+<img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/015fe232-cf18-4b2a-9923-2c2c8c76d91d" />
+<img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/fe682d1d-79a2-4ee8-ae5b-59af836d050e" />
+<img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/77d8564c-b89c-4a52-8047-d49b2ea67d42" />
 
 ## License
 
