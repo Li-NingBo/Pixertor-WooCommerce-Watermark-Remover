@@ -1,54 +1,55 @@
-# WooCommerce Watermark Remover
+# Pixertor - WooCommerce Watermark Remover
 
 AI-powered watermark removal for WooCommerce product images. Uses GPT-Image-2 via Pixertor-ToAPIs to intelligently remove watermarks from product featured images, gallery images, and content images.
 
-## Features
+## 下载安装
 
-- 🖼️ One-click batch watermark removal for all product images
-- ⚡ Concurrent processing — handle multiple images at once
-- 🎨 Supports featured images, gallery images, and in-content images
-- 🔧 Configurable AI model, resolution, and quality settings
-- 🇨🇳 Chinese admin interface
-- 📦 Independent dashboard menu — separate from WooCommerce settings
+👉 **[下载完整压缩包 (v1.3.0)](https://github.com/Li-NingBo/Pixertor-WooCommerce-Watermark-Remover/releases/download/v1.3.0/pixertor-woo-watermark-remover.zip)**
 
-## Requirements
+下载后 → WordPress 后台 → 插件 → 安装插件 → 上传插件 → 上传 zip 文件 → 激活即可使用。
+
+---
+
+## 环境要求
 
 - WordPress 6.0+
 - PHP 7.4+
 - WooCommerce 8.0+
 - [Pixertor-ToAPIs](https://toapis.com/login?aff=rmQP) API Key
 
-## Installation
+## 配置指南
 
-1. Download the latest release zip file
-2. Go to **Plugins → Add New → Upload Plugin** in your WordPress admin
-3. Upload the zip file and click **Install Now**
-4. Activate the plugin
+1. 激活后前往 **水印移除 → API 配置**
+2. 输入你的 Pixertor-ToAPIs API Key
+   - 还没有 Key？[点击获取 Token](https://toapis.com/login?aff=rmQP)
+3. 配置模型（默认 `gpt-image-2`）、分辨率、画质
+4. 点击 **保存设置**
 
-## Configuration
+## 使用说明
 
-1. Go to **水印移除 → API 配置** in the WordPress admin menu
-2. Enter your Pixertor-ToAPIs API Key
-   - Don't have one? [Get a token here](https://toapis.com/login?aff=rmQP)
-3. Configure default model (default: `gpt-image-2`), resolution, and quality
-4. Click **Save**
+1. 前往 **水印移除 → 任务处理**
+2. 勾选需要去除水印的商品图片
+3. 点击 **开始移除水印**
+4. 插件将并发处理，完成后自动替换原图
 
-## Usage
+## 功能特性
 
-1. Go to **水印移除 → 任务处理**
-2. Select the product images you want to process
-3. Click **开始移除水印**
-4. The plugin will process images concurrently and replace originals automatically
+- 🖼️ 一键批量去除商品图片水印
+- ⚡ 并发处理，支持多张图片同时进行
+- 🎨 支持主图、画廊图、内容内嵌图
+- 🔧 可配置 AI 模型、分辨率、画质
+- 🇨🇳 全中文管理界面
+- 📦 独立仪表盘菜单，不依赖 WooCommerce 子菜单
 
-## Supported Models
+## 支持的模型
 
-- `gpt-image-2` (default, recommended)
-- Any other model supported by the Pixertor-ToAPIs API
+- `gpt-image-2`（默认，推荐）
+- Pixertor-ToAPIs 支持的其他模型
 
 ## License
 
-GPL v2 or later. This plugin is free software — you are free to use it, but please do not modify and redistribute without permission.
+GPL v2 or later.
 
 ---
 
-**Note:** This repository is provided for download and reference only. We do not accept pull requests, code contributions, or modifications from external parties.
+**注意：** 本仓库仅供下载和使用。不接受 Pull Request 或外部代码贡献。
