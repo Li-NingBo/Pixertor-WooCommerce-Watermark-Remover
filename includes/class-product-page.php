@@ -31,7 +31,8 @@ class WWR_Product_Page {
     // ── Assets ───────────────────────────────────────────────────────
 
     public function enqueue_assets(string $hook): void {
-        if ($hook !== 'wwr-dashboard_page_' . $this->page_slug) {
+        $page = $_GET['page'] ?? '';
+        if ($page !== $this->page_slug) {
             return;
         }
 

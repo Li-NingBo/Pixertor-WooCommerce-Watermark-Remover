@@ -80,7 +80,8 @@ class WWR_Admin_Settings {
 
     public function enqueue_assets(string $hook): void {
         // 只在插件页加载
-        if (!in_array($hook, ['toplevel_page_' . $this->main_slug, $this->main_slug . '_page_wwr-remove-watermarks'], true)) {
+        $page = $_GET['page'] ?? '';
+        if (!in_array($page, [$this->main_slug, 'wwr-remove-watermarks'], true)) {
             return;
         }
     }
